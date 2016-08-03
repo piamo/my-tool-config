@@ -4,6 +4,6 @@
 - linux
 - mac
 
-## tools
+## Tools
 - vim
 - tmux
