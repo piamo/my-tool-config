@@ -33,6 +33,8 @@ Plugin 'vim-airline/vim-airline-themes'
 " vim shell
 " Plugin 'vim-scripts/Conque-Shell'
 Plugin 'jewes/Conque-Shell'
+" Generate a fast shell prompt with powerline symbols and airline colors
+Plugin 'edkolev/promptline.vim'
 
 " required, plugins avaliable after
 call vundle#end()
@@ -124,12 +126,22 @@ map <F5> :NERDTreeToggle<cr>
 " ruby compiler
 autocmd FileType ruby compiler ruby
 
+" config youcompleteme
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_enable_diagnostic_highlighting = 0
 ""highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
 " vim powerline
 "let g:Powerline_symbols = 'fancy'
+
+" config airline
+" let airline use powerline fonts
+let g:airline_powerline_fonts = 1
+" config vim tabline
+let g:airline#extensions#tabline#enabled = 1
+" set gvim font which can show powerline symbol
+" PS: vim font always follow terminal, can't be changed
+set guifont=Source\ Code\ Pro\ for\ Powerline:h14 
 
 " no auto comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
