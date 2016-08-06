@@ -27,14 +27,9 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'airblade/vim-gitgutter'
 " run git cmd in vim
 Plugin 'tpope/vim-fugitive'
-" vim status bar
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 " vim shell
 " Plugin 'vim-scripts/Conque-Shell'
 Plugin 'jewes/Conque-Shell'
-" Generate a fast shell prompt with powerline symbols and airline colors
-Plugin 'edkolev/promptline.vim'
 
 " required, plugins avaliable after
 call vundle#end()
@@ -111,11 +106,6 @@ set guioptions+=T "toolbar
 set guioptions+=r "scrollbar
 
 
-"inoremap ( ()<ESC>i
-"inoremap [ []<ESC>i
-"inoremap { {}<ESC>i
-"inoremap " ""<ESC>i
-
 " NERD tree configuration
 " if only directory tree, close vim
 autocmd vimenter * if !argc() | NERDTree | endif 
@@ -132,13 +122,11 @@ let g:ycm_enable_diagnostic_highlighting = 0
 ""highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
 " vim powerline
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 "let g:Powerline_symbols = 'fancy'
 
-" config airline
-" let airline use powerline fonts
-let g:airline_powerline_fonts = 1
-" config vim tabline
-let g:airline#extensions#tabline#enabled = 1
 " set gvim font which can show powerline symbol
 " PS: vim font always follow terminal, can't be changed
 set guifont=Source\ Code\ Pro\ for\ Powerline:h14 
