@@ -38,15 +38,14 @@ Plugin 'jewes/Conque-Shell'
 call vundle#end()
 
 " --------------------------------------------------------------------------------------------------------------------------
-"语法支持
-syn on
+
+"打开语法高亮 
+syntax on 
 
 "传说中的去掉边框用下边这一句 
 set go= 
 "设置背景色，每种配色有两种方案，一个light、一个dark 
 set background=light 
-"打开语法高亮 
-syntax on 
 "显示行号 
 set number 
 "显示相对行号
