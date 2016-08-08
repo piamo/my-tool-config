@@ -30,6 +30,8 @@ Plugin 'tpope/vim-fugitive'
 " vim shell
 " Plugin 'vim-scripts/Conque-Shell'
 Plugin 'jewes/Conque-Shell'
+" vim colorscheme: solarized
+Plugin 'altercation/vim-colors-solarized'
 
 " required, plugins avaliable after
 call vundle#end()
@@ -41,8 +43,6 @@ syntax on
 
 "传说中的去掉边框用下边这一句 
 set go= 
-"设置背景色，每种配色有两种方案，一个light、一个dark 
-set background=light 
 "显示行号 
 set number 
 "显示相对行号
@@ -75,8 +75,19 @@ set fileencodings=utf-8,gbk
 "搜索忽略大小写
 set ignorecase
 
-"设置配色，这里选择的是desert，也有其他方案，在vim中输入:color 在敲tab键可以查看 
-colorscheme koehler
+
+
+" if not set, something wrong in vim
+let g:solarized_termtrans = 1
+if has('gui_running')
+else
+  let g:solarized_termcolors=256
+endif
+"设置背景色，每种配色有两种方案，一个light、一个dark 
+set background=dark
+"设置配色，这里选择的是solarized，也有其他方案，在vim中输入:color 在敲tab键可以查看 
+colorscheme solarized
+
 
 "配置标签页,ctrl h/l切换标签
 let mapleader= ','
