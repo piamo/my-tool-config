@@ -84,11 +84,13 @@ let mapleader= ';'
 " if not set, something wrong in vim
 let g:solarized_termtrans = 1
 if has('gui_running')
+  set background=light
 else
+  set background=dark
   let g:solarized_termcolors=256
 endif
 "设置背景色，每种配色有两种方案，一个light、一个dark
-set background=dark
+"set background=dark
 "设置配色，这里选择的是solarized，也有其他方案，在vim中输入:color 在敲tab键可以查看
 colorscheme solarized
 
