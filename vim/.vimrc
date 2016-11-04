@@ -80,6 +80,12 @@ set fileencodings=utf-8,gbk
 set ignorecase
 " 设置<leader>键
 let mapleader= ';'
+" 将当前工作路径设为Vim PATH
+set path=$PWD/**
+" buffer window config
+set wildmenu wildmode=full
+set wildchar=<Tab> wildcharm=<C-Z>
+noremap <c-n> :b <c-z>
 
 " if not set, something wrong in vim
 let g:solarized_termtrans = 1
