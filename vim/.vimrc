@@ -9,10 +9,14 @@ call vundle#begin()
 " required!
 Plugin 'gmarik/Vundle.vim'
 
+" ctrp.vim
+Plugin 'ctrlpvim/ctrlp.vim'
 " directory tree
 Plugin 'scrooloose/nerdtree'
 " nerdtree tabs
 Plugin 'jistr/vim-nerdtree-tabs'
+" git change
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 " nginx syntax
 Plugin 'evanmiller/nginx-vim-syntax'
 " vim ruby
@@ -36,6 +40,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/syntastic'
 " warning trailing whitespace
 Plugin 'bronson/vim-trailing-whitespace'
+" scala support
+Plugin 'derekwyatt/vim-scala'
 
 " required, plugins avaliable after
 call vundle#end()
@@ -127,6 +133,19 @@ set guioptions+=m "menu bar
 set guioptions+=T "toolbar
 set guioptions+=r "scrollbar
 
+"" ctrlp.vim
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+" set working directory
+let g:ctrlp_working_path_mode = 'ra'
+" customize root flags
+let g:ctrlp_root_markers = ['Gemfile.lock']
+" ignore pattern
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+
+" custom listing command
+let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 
 " NERD tree configuration
 " if only directory tree, close vim
@@ -134,6 +153,26 @@ autocmd vimenter * if !argc() | NERDTree | endif
 " \n open directory tree
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 map <F5> :NERDTreeToggle<cr>
+let NERDTreeShowLineNumber=1
+let NERDTreeAutoCenter=1
+" show hidden files
+let NERDTreeShowHidden=1
+"let g:nerdtree_tabs_open_on_console_startup=1
+" ignore file patterns
+let NERDTreeIgnore=['\.pyc', '\~$', '\.swp']
+" show bookmarks
+let NERDTreeShowBookmarks=1
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 " ruby compiler
 autocmd FileType ruby compiler ruby
