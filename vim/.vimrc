@@ -1,4 +1,5 @@
 " ------------------------------------------------------ vundle plugin -----------------------------------------------------
+set shell=bash\ -l
 set nocompatible              " be improved
 filetype off
 
@@ -38,10 +39,19 @@ Plugin 'jewes/Conque-Shell'
 Plugin 'altercation/vim-colors-solarized'
 " syntax checker
 Plugin 'scrooloose/syntastic'
-" warning trailing whitespace
-Plugin 'bronson/vim-trailing-whitespace'
+" white space highlight
+Plugin 'ntpeters/vim-better-whitespace'
 " scala support
 Plugin 'derekwyatt/vim-scala'
+" groovy support
+Plugin 'vim-scripts/groovy.vim'
+" markdown syntax support
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+" markdown preview
+Plugin 'suan/vim-instant-markdown'
+" asynchronous grep
+Plugin 'ramele/agrep'
 
 " required, plugins avaliable after
 call vundle#end()
@@ -105,6 +115,9 @@ endif
 "set background=dark
 "设置配色，这里选择的是solarized，也有其他方案，在vim中输入:color 在敲tab键可以查看
 colorscheme solarized
+
+" vim markdown config
+let g:vim_markdown_folding_disabled = 1
 
 
 "配置标签页,ctrl h/l切换标签
@@ -183,9 +196,9 @@ let g:ycm_enable_diagnostic_highlighting = 0
 ""highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 
 " vim powerline
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
 "let g:Powerline_symbols = 'fancy'
 
 " set gvim font which can show powerline symbol
@@ -225,4 +238,8 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <C-A> :ZoomToggle<CR>
+nnoremap <silent> <C-Z> :ZoomToggle<CR>
+
+" Jenkinsfile as groovy syntax
+au BufReadPost Jenkinsfile set syntax=groovy
+au BufReadPost Jenkinsfile set filetype=groovy
