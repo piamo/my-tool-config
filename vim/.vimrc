@@ -52,6 +52,18 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'suan/vim-instant-markdown'
 " asynchronous grep
 Plugin 'ramele/agrep'
+" vim rails support
+Plugin 'tpope/vim-rails'
+" vim bundler support
+Plugin 'tpope/vim-bundler'
+" vim rake support
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-projectionist'
+" snipmate
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
 
 " required, plugins avaliable after
 call vundle#end()
@@ -243,3 +255,11 @@ nnoremap <silent> <C-Z> :ZoomToggle<CR>
 " Jenkinsfile as groovy syntax
 au BufReadPost Jenkinsfile set syntax=groovy
 au BufReadPost Jenkinsfile set filetype=groovy
+
+" snipmate
+let g:snipMate = get(g:, 'snipMate', {}) " Allow for vimrc re-sourcing
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['ruby'] = 'ruby,rails'"
+" insert mode
+imap yy <esc>a<Plug>snipMateNextOrTrigger
+" smap ss <Plug>snipMateNextOrTrigger
