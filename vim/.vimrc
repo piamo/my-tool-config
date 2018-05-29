@@ -67,6 +67,14 @@ Plugin 'tomtom/tlib_vim'
 " ruby block select
 Plugin 'kana/vim-textobj-user'
 Plugin 'nelstrom/vim-textobj-rubyblock'
+" go plugin
+Plugin 'fatih/vim-go'
+" python ide
+Plugin 'klen/python-mode'
+" C++ 11/14
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'nathanaelkane/vim-indent-guides'
+
 runtime macros/matchit.vim
 
 " required, plugins avaliable after
@@ -87,12 +95,12 @@ set number
 set cindent
 "在windows版本中vim的退格键模式默认与vi兼容，与我们的使用习惯不太符合，下边这条可以改过来
 set backspace=indent,eol,start
-"用空格键替换制表符
-set expandtab
-"制表符占2个空格
-set tabstop=2
-"默认缩进2个空格大小
-set shiftwidth=2
+""用空格键替换制表符
+"set expandtab
+""制表符占2个空格
+"set tabstop=2
+""默认缩进2个空格大小
+"set shiftwidth=2
 "增量式搜索
 set incsearch
 "高亮搜索
@@ -103,6 +111,8 @@ set showmatch
 set laststatus=2
 "光标所在行加下划线
 set cursorline
+"光标所在列加下划线
+set cursorcolumn
 "vim之外修改自动读入
 set autoread
 "有时中文会显示乱码，用一下几条命令解决
@@ -110,14 +120,21 @@ let &termencoding=&encoding
 set fileencodings=utf-8,gbk
 "搜索忽略大小写
 set ignorecase
+" 禁止折行
+set nowrap
+
 " 设置<leader>键
-let mapleader= ';'
+let mapleader=';'
 " 将当前工作路径设为Vim PATH
 set path=$PWD/**
-" buffer window config
+" vim 自身命令行模式智能补全
 set wildmenu wildmode=full
 set wildchar=<Tab> wildcharm=<C-Z>
+
 noremap <c-n> :b <c-z>
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <leader>y "+y
+nmap <leader>m %
 
 " if not set, something wrong in vim
 let g:solarized_termtrans = 1
@@ -139,23 +156,31 @@ let g:vim_markdown_folding_disabled = 1
 "配置标签页,ctrl h/l切换标签
 nnoremap <C-l> gt
 nnoremap <C-h> gT
-nnoremap <leader>t : tabe<CR>
+nnoremap <leader>v :tabe<CR>
 
 " 鼠标切换窗口
 set mouse=a
 "很多插件都会要求的配置检测文件类型
-:filetype on
-:filetype plugin on
-:filetype indent on
+filetype on
+filetype plugin on
+filetype indent on
+
 "下边这个很有用可以根据不同的文件类型执行不同的命令
 "例如：如果是c/c++类型
 ":autocmd FileType c,cpp : set foldmethod=syntax
-:autocmd FileType c,cpp :set number
-:autocmd FileType c,cpp :set cindent
+autocmd FileType c,cpp :set cindent
+
 "例如：如果是python类型
-:autocmd FileType python :set number
 ":autocmd FileType python : set foldmethod=syntax
-:autocmd FileType python :set smartindent
+":autocmd FileType python :set smartindent
+autocmd FileType python :set expandtab tabstop=4 shiftwidth=4
+
+" go
+autocmd FileType go :set smartindent
+
+" ruby
+" 空格代替tab; tab占2个space; 默认缩进2个space
+autocmd FileType ruby :set expandtab tabstop=2 shiftwidth=2
 
 
 set guioptions+=m "menu bar
@@ -180,7 +205,7 @@ let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 " if only directory tree, close vim
 autocmd vimenter * if !argc() | NERDTree | endif
 " \n open directory tree
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
+map <leader>t <plug>NERDTreeTabsToggle<CR>
 map <F5> :NERDTreeToggle<cr>
 let NERDTreeShowLineNumber=1
 let NERDTreeAutoCenter=1
@@ -215,7 +240,6 @@ let g:ycm_enable_diagnostic_highlighting = 0
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
-"let g:Powerline_symbols = 'fancy'
 
 " set gvim font which can show powerline symbol
 " PS: vim font always follow terminal, can't be changed
@@ -267,3 +291,56 @@ let g:snipMate.scope_aliases['ruby'] = 'ruby,rails'"
 " insert mode
 imap yy <esc>a<Plug>snipMateNextOrTrigger
 " smap ss <Plug>snipMateNextOrTrigger
+
+
+""""""""""""""""""""""
+    "Quickly Run
+""""""""""""""""""""""
+map <F4> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'java'
+        exec "!javac %"
+        exec "!time java %<"
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        exec "!time python3 %"
+    elseif &filetype == 'ruby'
+        exec "!time ruby %"
+    elseif &filetype == 'html'
+        exec "!firefox % &"
+    elseif &filetype == 'go'
+"        exec "!go build %<"
+        exec "!time go run %"
+    elseif &filetype == 'mkd'
+        exec "!~/.vim/markdown.pl % > %.html &"
+        exec "!firefox %.html &"
+    endif
+endfunc
+
+let g:pymode_python = 'python3'
+
+" vim-cpp-enhanced-highlight
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+let c_no_curly_error=1
+
+" nathanaelkane/vim-indent-guides
+" 随 vim 自启动
+let g:indent_guides_enable_on_vim_startup=1
+" 从第二层开始可视化显示缩进
+let g:indent_guides_start_level=2
+" 色块宽度
+let g:indent_guides_guide_size=1
+" 快捷键 i 开/关缩进可视化
+nmap <silent> <Leader>i <Plug>IndentGuidesToggle
